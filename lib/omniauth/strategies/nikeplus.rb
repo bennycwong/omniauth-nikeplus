@@ -5,6 +5,7 @@ require 'omniauth'
 require 'timeout'
 require 'securerandom'
 require 'omniauth-oauth2'
+require 'multi_json'
 
 module OmniAuth
   module Strategies
@@ -19,28 +20,19 @@ module OmniAuth
         option :authorize_params, {
           :response_type => 'code'
         }
-        
-      # uid { raw_info['data']['xid'].to_s }
- # 
- #      info do
- #        {
- #          'id' => raw_info['data']['xid'],
- #          'photo' => raw_info['data']['image'],
- #          'first_name' => raw_info['data']['first'],
- #          'last_name' => raw_info['data']['last'],
- #        }
- #      end      # 
-      # 
-      # def user_data
-      #   access_token.options[:mode] = :query
-      #   user_data ||= access_token.get('/nudge/api/users/@me').parsed
-      # end
-      # 
-      # def raw_info
-      #   @raw_info ||= MultiJson.load(access_token.get('/nudge/api/users/@me').body)
-      # rescue ::Errno::ETIMEDOUT
-      #   raise ::Timeout::Error
-      # end
+
+      uid{ raw_info['user_id'].gsub("\"","")}
+
+      extra do
+        {
+          'raw_info' => raw_info
+        }
+      end
+
+      def raw_info
+        @raw_info = access_token.to_hash
+      end
+     
 
     end
   end
