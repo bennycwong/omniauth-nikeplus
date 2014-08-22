@@ -10,11 +10,11 @@ require 'multi_json'
 module OmniAuth
   module Strategies
     class Nikeplus < OmniAuth::Strategies::OAuth2
-
-      option :client_options, {
+        option :client_options, {
           :site => 'https://api.nike.com',
           :authorize_url => '/oauth/2.0/authorize',
-          :token_url => '/oauth/2.0/token'
+          :token_url => '/oauth/2.0/token',
+          :parser => :json
         }
         
         option :authorize_params, {
