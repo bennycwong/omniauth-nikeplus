@@ -6,12 +6,24 @@ This is an OmniAuth strategy for authenticating to Nike+ Api. To
 use it, you'll need to the Application ID and Secret from Nike+.
 
 ## Basic Usage
+in your gemfile, add:
+
+	gem 'oauth2', :git => 'https://github.com/bennycwong/oauth2.git'
+	gem 'omniauth-nikeplus', '>=0.0.11'
+
+In your configurations if using Omniauth
 
     use OmniAuth::Builder do
       provider :nikeplus, 
         ENV['NIKEPLUS_CLIENT_ID'], 
         ENV['NIKEPLUS_CLIENT_SECRET']
     end
+    
+If you are using devise, add the following to your config/initializers/devise.rb
+	
+	config.omniauth :nikeplus, "NIKEPLUS_CLIENT_ID", "NIKEPLUS_CLIENT_SECRET"
+
+
 
 ## Original License
 
